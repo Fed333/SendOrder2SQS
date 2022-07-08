@@ -9,14 +9,16 @@ import org.springframework.stereotype.Service;
 @Service
 public class SendSQSMessageService {
 
+    final AmazonSQS sqs = AmazonSQSClientBuilder.defaultClient();
+
     @Value("${queue.url}")
     private String queueUrl;
 
     @Value("${queue.group.id}")
     private String groupId;
 
+
     public void sendMessage(String message) {
-        final AmazonSQS sqs = AmazonSQSClientBuilder.defaultClient();
 
         SendMessageRequest send_msg_request = new SendMessageRequest()
                 .withQueueUrl(queueUrl)
