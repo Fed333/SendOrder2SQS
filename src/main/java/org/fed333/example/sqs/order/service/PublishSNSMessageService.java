@@ -24,7 +24,7 @@ public class PublishSNSMessageService {
             .credentialsProvider(ProfileCredentialsProvider.create())
             .build();
 
-    @Value("${queue.group.id}")
+    @Value("${message.group.id}")
     private String groupId;
 
     @Value("${sns.orders.topic.arn}")

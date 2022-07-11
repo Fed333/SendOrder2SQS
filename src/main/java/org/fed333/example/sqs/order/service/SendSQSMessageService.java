@@ -14,7 +14,7 @@ public class SendSQSMessageService {
     @Value("${queue.url}")
     private String queueUrl;
 
-    @Value("${queue.group.id}")
+    @Value("${message.group.id}")
     private String groupId;
 
 
