@@ -1,5 +1,6 @@
 package org.fed333.example.sqs.order.service;
 
+import org.fed333.example.sqs.order.model.OrderModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -7,7 +8,7 @@ import org.springframework.stereotype.Service;
 public class MessageConsoleSenderService {
 
     @Autowired
-    private SendSQSMessageService sqsMessageService;
+    private PublishSNSMessageService snsMessageService;
 
     @Autowired
     private OrderModel2JsonConverterService jsonConverterService;
@@ -16,9 +17,10 @@ public class MessageConsoleSenderService {
     private InputDataFromConsoleService inputDataFromConsoleService;
 
     public void sendMessageFromConsole() {
-        String jsonMessage = jsonConverterService.toJsonString(inputDataFromConsoleService.readOrder());
+        OrderModel orderModel = inputDataFromConsoleService.readOrder();
+        String jsonMessage = jsonConverterService.toJsonString(orderModel);
         System.out.println("Send JSON message to SQS Orders queue.");
-        sqsMessageService.sendMessage(jsonMessage);
+        snsMessageService.publishMessage(jsonMessage, orderModel.getGoodsType());
         System.out.println("Message: \n" + jsonMessage + "\n has been successfully sent.");
     }
 
